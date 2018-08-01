@@ -1,0 +1,33 @@
+version: '2'
+
+services:
+  homeassistant:
+    container_name: home-assistant
+    image: homeassistant/armhf-homeassistant
+    volumes:
+      - /opt/has/config:/config
+      - /etc/localtime:/etc/localtime:ro
+#    devices:
+#      - /dev/ttyUSB0:/dev/ttyUSB0
+    restart: always
+    network_mode: host
+  hass-addon-ssh:
+    container_name: home-assistant-addon-ssh
+    image: homeassistant/armhf-addon-ssh
+    #restart: always
+    network_mode: host
+  hass-addon-configurator:
+    container_name: home-assistant-addon-configurator
+    image: homeassistant/armhf-addon-configurator
+    #restart: always
+    network_mode: host
+  hass-addon-letsencrypt:
+    container_name: home-assistant-addon-letsencrypt
+    image: homeassistant/armhf-addon-letsencrypt
+    restart: always
+    #network_mode: host
+  hass-addon-ide:
+    container_name: home-assistant-addon-ide
+    image: docker pull hassioaddons/ide-armhf
+    #restart: always
+    network_mode: host

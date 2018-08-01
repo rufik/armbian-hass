@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  mosquitto:
+    container_name: mqtt
+    image: homeassistant/armhf-addon-mosquitto
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /opt/has/mqtt/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - /opt/has/mqtt/data:/mosquitto/data
+      - /opt/has/mqtt/logs:/mosquitto/log
+    restart: always
+    network_mode: host
