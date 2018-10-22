@@ -1,33 +1,66 @@
 version: '2'
 
 services:
-  homeassistant:
+  home-assistant:
     container_name: home-assistant
-    image: homeassistant/armhf-homeassistant
+    image: homeassistant/armhf-homeassistant:0.84.4
     volumes:
       - /opt/has/config:/config
       - /etc/localtime:/etc/localtime:ro
 #    devices:
 #      - /dev/ttyUSB0:/dev/ttyUSB0
-    restart: always
+    restart: on-failure
     network_mode: host
-  hass-addon-ssh:
-    container_name: home-assistant-addon-ssh
-    image: homeassistant/armhf-addon-ssh
-    #restart: always
+    user: has
+    depends_on:
+      - mariadb
+      - influxdb
+  mariadb:
+    container_name: mariadb
+    image: yobasystems/alpine-mariadb:armhf
+    volumes:
+      - /opt/mariadb/data:/var/lib/mysql
+      - /opt/mariadb/config:/etc/mysql
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "3306:3306"
+    restart: on-failure
+    network_mode: bridge
+    user: has
+  influxdb:
+    container_name: influxdb
+    image: influxdb
+    ports:
+      - "8086:8086"
+    volumes:
+      - /opt/has/influxdb/influxdb.conf:/etc/influxdb/influxdb.conf
+      - /opt/has/influxdb:/var/lib/influxdb
+      - /etc/localtime:/etc/localtime:ro
+    restart: on-failure
+    network_mode: bridge
+    user: has
+  grafana:
+    container_name: grafana
+    image:  proxx/grafana-armv7
+    ports:
+      - "3000:3000"
+    volumes:
+    #  - /opt/has/grafana/grafana.ini:/etc/grafana/grafana.ini
+      - /etc/localtime:/etc/localtime:ro
+    restart: on-failure
+    network_mode: bridge
+    depends_on:
+      - influxdb
+    user: has
+  mqtt:
+    container_name: mqtt
+    image: homeassistant/armhf-addon-mosquitto
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /opt/has/mqtt/conf/mosquitto.conf:/etc/mosquitto.conf
+      - /opt/has/mqtt/data:/data
+      - /opt/has/mqtt/logs:/mosquitto/log
+      - /opt/has/mqtt/conf/options.json:/data/options.json
+    restart: on-failure
     network_mode: host
-  hass-addon-configurator:
-    container_name: home-assistant-addon-configurator
-    image: homeassistant/armhf-addon-configurator
-    #restart: always
-    network_mode: host
-  hass-addon-letsencrypt:
-    container_name: home-assistant-addon-letsencrypt
-    image: homeassistant/armhf-addon-letsencrypt
-    restart: always
-    #network_mode: host
-  hass-addon-ide:
-    container_name: home-assistant-addon-ide
-    image: docker pull hassioaddons/ide-armhf
-    #restart: always
-    network_mode: host
+    user: has

@@ -1,0 +1,9 @@
+{
+  "plain": true,
+  "ssl": false,
+  "anonymous": true,
+  "customize": {
+    "active": false,
+    "folder": "mosquitto"
+  }
+}
