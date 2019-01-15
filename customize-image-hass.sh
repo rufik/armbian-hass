@@ -48,16 +48,17 @@ print_info "Patching cpufrequtils min speed for H3..."
 sed -i 's/408000/480000/g' /etc/default/cpufrequtils
 service cpufrequtils restart
 print_info "Disabling unattended-upgrades service..."
-service stop unattended-upgrades
+systemctl stop unattended-upgrades
 systemctl disable unattended-upgrades
 
 print_info "Updating OS..."
 apt-get -q update && apt-get -y upgrade
 
 #make sure that OS upgrade does not recover faulty min cpu freq
+print_info "Patching cpufrequtils min speed for H3 (after OS upgrade)..."
 sed -i 's/408000/480000/g' /etc/default/cpufrequtils
 service cpufrequtils restart
-
+print_info "Disabling unattended-upgrades service (after OS upgrade)..."
 systemctl stop unattended-upgrades
 systemctl disable unattended-upgrades
 
@@ -110,7 +111,7 @@ mkdir -p $BASE_DIR/influxdb
 mkdir -p $BASE_DIR/mariadb/data
 mkdir -p $BASE_DIR/mariadb/config
 #set user "has" as owner
-chown -R has.root $BASE_DIR/opt/has
+chown -R has.root $BASE_DIR/
 #chmod ug+rwx $BASE_DIR/mqtt/logs/
 
 print_info "Downloading MQTT config files..."
