@@ -44,8 +44,12 @@ print_info "******** -< Starting HASS customization >- ********" "" "ext"
 #user creation is armbian's first run feature
 
 #fix improper min cpu freq for H3
+print_info "Patching cpufrequtils min speed for H3..."
 sed -i 's/408000/480000/g' /etc/default/cpufrequtils
 service cpufrequtils restart
+print_info "Disabling unattended-upgrades service..."
+service stop unattended-upgrades
+systemctl disable unattended-upgrades
 
 print_info "Updating OS..."
 apt-get -q update && apt-get -y upgrade
