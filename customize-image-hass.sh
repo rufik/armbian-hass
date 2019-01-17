@@ -110,8 +110,6 @@ mkdir -p $BASE_DIR/mqtt/conf
 mkdir -p $BASE_DIR/influxdb
 mkdir -p $BASE_DIR/mariadb/data
 mkdir -p $BASE_DIR/mariadb/config
-#set user "has" as owner
-chown -R has.root $BASE_DIR/
 #chmod ug+rwx $BASE_DIR/mqtt/logs/
 
 print_info "Downloading MQTT config files..."
@@ -144,6 +142,8 @@ print_info "Patching docker-compose files using 'has' user UID=$HAS_UID"
 sed -i -e 's\user: has\user: "$HAS_UID"\g' $DOCKER_COMPOSE_DIR/docker-compose-hass.yml
 print_info "" "Done." "info"
 
+#set user "has" as owner
+chown -R has.root $BASE_DIR/
 
 print_info "Pulling & creating docker images..."
 docker-compose -f $DOCKER_COMPOSE_DIR/docker-compose-portainer.yml pull
