@@ -9,7 +9,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
 #    devices:
 #      - /dev/ttyUSB0:/dev/ttyUSB0
-    restart: on-failure
+    restart: on-failure:3
     network_mode: host
     user: has
     depends_on:
@@ -24,12 +24,12 @@ services:
       - /etc/localtime:/etc/localtime:ro
     ports:
       - "3306:3306"
-    restart: on-failure
+    restart: on-failure:3
     network_mode: bridge
     user: has
   influxdb:
     container_name: influxdb
-    image: influxdb
+    image: influxdb:3
     ports:
       - "8086:8086"
     volumes:
@@ -47,20 +47,21 @@ services:
     volumes:
     #  - /opt/has/grafana/grafana.ini:/etc/grafana/grafana.ini
       - /etc/localtime:/etc/localtime:ro
-    restart: on-failure
+    restart: on-failure:3
     network_mode: bridge
     depends_on:
       - influxdb
     user: has
   mqtt:
     container_name: mqtt
-    image: homeassistant/armhf-addon-mosquitto
+    image: eclipse-mosquitto:1.5
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /opt/has/mqtt/conf/mosquitto.conf:/etc/mosquitto.conf
-      - /opt/has/mqtt/data:/data
+      - /opt/has/mqtt/conf:/mosquitto/config
+      - /opt/has/mqtt/data:/mosquitto/data
       - /opt/has/mqtt/logs:/mosquitto/log
-      - /opt/has/mqtt/conf/options.json:/data/options.json
-    restart: on-failure
-    network_mode: host
+    restart: on-failure:3
+    network_mode: bridge
+    ports:
+      - "1883:1883"
     user: has
