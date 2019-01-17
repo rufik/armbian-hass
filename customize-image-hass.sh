@@ -126,6 +126,11 @@ print_info "Downloading HASS, MariaDB and InfluxDB config files..."
 wget -q -O $BASE_DIR/influxdb/influxdb.conf https://raw.githubusercontent.com/rufik/armbian-hass/master/influxdb/influxdb.conf
 wget -q -O $BASE_DIR/config/configuration.yaml https://raw.githubusercontent.com/rufik/armbian-hass/master/hass/configuration.yaml
 wget -q -O $BASE_DIR/mariadb/config/my.cnf https://raw.githubusercontent.com/rufik/armbian-hass/master/mariadb/my.cnf
+touch $BASE_DIR/config/groups.yaml
+touch $BASE_DIR/config/automations.yaml
+touch $BASE_DIR/config/scripts.yaml
+touch $BASE_DIR/config/customize.yaml
+touch $BASE_DIR/config/secrets.yaml
 print_info "" "Done." "info"
 
 
