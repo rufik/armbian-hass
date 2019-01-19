@@ -1,17 +1,11 @@
 homeassistant:
-  # Name of the location where Home Assistant is running
   name: Home
-  # Lodz, Poland, by default
-  latitude: 51.759351
-  longitude: 19.458577
-  elevation: 180
+  latitude: 51.0
+  longitude: 19.0
+  elevation: 200
   unit_system: metric
-  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: Europe/Warsaw
   customize: !include customize.yaml
-
-# Show links to resources in log and frontend
-#introduction:
 
 # Enables the frontend
 frontend:
@@ -19,33 +13,30 @@ frontend:
 # Enables configuration UI
 config:
 
-# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
-# http:
-#   base_url: example.duckdns.org:8123
-
 # For more information, please see:
 # https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
 updater:
-  # Optional, allows Home Assistant developers to focus on popular components.
   include_used_components: true
+
+# Discover some devices automatically
+discovery:
 
 mqtt:
   broker: localhost
   port: 1883
 
-#influxdb:
-#  host: localhost
-#  port: 8086
+recorder:
+  #keep only last month in SQL, whole data goes into influxdb
+  purge_keep_days: 30
+  db_url: mysql://user:pwd@localhost:3307/HASS?charset=utf8
+  purge_interval: 1
+
+influxdb:
+  host: localhost
+  port: 8086
 #  username: user
 #  password: password
-#  database: HASS
-
-#recorder:
-#  db_url: mysql+pymysql://user:password@localhost:3306/HASS?charset=utf8
-  
-
-# Discover some devices automatically
-discovery:
+  database: HASS
 
 # Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
@@ -64,7 +55,6 @@ sun:
 
 # Weather prediction
 sensor:
-  - platform: yr
 
 # Text to speech
 tts:
