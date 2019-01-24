@@ -13,6 +13,10 @@ Tested on OrangePI 2 and OrangePI PC.
    ```shell
    sudo /tmp/customize-image-hass.sh -h opi2
    ```
+   or use -d option to customize docker bridge network address:
+   ```shell
+   sudo /tmp/customize-image-hass.sh -h opi2 -d 192.168.7.0/24
+   ```
    It will perform customization with Home Assistant installation using Docker.
 - After that machine restart is required if the hostname is changed.
  

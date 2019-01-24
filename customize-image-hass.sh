@@ -63,7 +63,7 @@ systemctl stop unattended-upgrades
 systemctl disable unattended-upgrades
 
 print_info "Installing required packages and armbianmonitor..."
-apt-get -q -y install mc ccze jq avahi-daemon screen telnet
+apt-get -q -y install mc ccze jq avahi-daemon screen telnet p7zip
 armbianmonitor -r
 
 print_info "Setting red LED as hearbeat on system start ..."
@@ -77,6 +77,10 @@ while getopts ":h:" opt; do
 		print_info "Setting hostname '$OPTARG' ..."
 		hostname $OPTARG
 		echo "$OPTARG" > /etc/hostname
+	;;
+	d)
+		print_info "Customizing docker bridge network using '$OPTARG' ..."
+		echo "{\"bip\": \"${OPTARG}\"}" > /etc/docker/daemon.json
 	;;
 	\?)
 		print_info "Invalid option: -$OPTARG. Skipping." "" "warn"
@@ -92,6 +96,7 @@ print_info "Installing Docker CE ..."
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 add-apt-repository "deb [arch=armhf] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 apt-get -q update
+sleep 3
 apt-get -q -y install docker-ce docker-compose
 systemctl enable docker
 print_info "" "Done." "info"
