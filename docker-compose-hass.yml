@@ -19,8 +19,8 @@ services:
     container_name: mariadb
     image: yobasystems/alpine-mariadb:armhf
     volumes:
-      - /opt/mariadb/data:/var/lib/mysql
-      - /opt/mariadb/config:/etc/mysql
+      - /opt/has/mariadb/data:/var/lib/mysql
+      - /opt/has/mariadb/config:/etc/mysql
       - /etc/localtime:/etc/localtime:ro
     ports:
       - "3306:3306"
