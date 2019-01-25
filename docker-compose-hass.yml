@@ -1,9 +1,9 @@
-version: '2'
+version: '3'
 
 services:
   home-assistant:
     container_name: home-assistant
-    image: homeassistant/armhf-homeassistant:0.85.1
+    image: homeassistant/armhf-homeassistant:0.86.2
     volumes:
       - /opt/has/config:/config
       - /etc/localtime:/etc/localtime:ro
@@ -29,14 +29,14 @@ services:
     user: has
   influxdb:
     container_name: influxdb
-    image: influxdb:3
+    image: influxdb
     ports:
       - "8086:8086"
     volumes:
       - /opt/has/influxdb/influxdb.conf:/etc/influxdb/influxdb.conf
       - /opt/has/influxdb:/var/lib/influxdb
       - /etc/localtime:/etc/localtime:ro
-    restart: on-failure
+    restart: on-failure:3
     network_mode: bridge
     user: has
   grafana:

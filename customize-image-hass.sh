@@ -71,15 +71,16 @@ sed -i 's/exit 0//g' /etc/rc.local
 echo 'RESULT=`echo "heartbeat" > /sys/class/leds/orangepi\:red\:status/trigger`' >> /etc/rc.local
 echo 'exit 0' >> /etc/rc.local
 
-while getopts ":h:" opt; do
+while getopts ":h:d:" opt; do
 	case "$opt" in
 	h)
-		print_info "Setting hostname '$OPTARG' ..."
+		print_info "Setting hostname '${OPTARG}' ..."
 		hostname $OPTARG
 		echo "$OPTARG" > /etc/hostname
 	;;
 	d)
 		print_info "Customizing docker bridge network using '$OPTARG' ..."
+		mkdir -p /etc/docker
 		echo "{\"bip\": \"${OPTARG}\"}" > /etc/docker/daemon.json
 	;;
 	\?)
