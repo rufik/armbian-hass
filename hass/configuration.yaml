@@ -28,7 +28,7 @@ mqtt:
 recorder:
   #keep only last month in SQL, whole data goes into influxdb
   purge_keep_days: 30
-  db_url: mysql://user:pwd@localhost:3307/HASS?charset=utf8
+  db_url: mysql://user:pwd@localhost:3306/HASS?charset=utf8
   purge_interval: 1
 
 influxdb:
