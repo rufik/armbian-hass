@@ -3,7 +3,7 @@ version: '3'
 services:
   home-assistant:
     container_name: home-assistant
-    image: homeassistant/armhf-homeassistant:0.86.2
+    image: homeassistant/armhf-homeassistant:0.87.0
     volumes:
       - /opt/has/config:/config
       - /etc/localtime:/etc/localtime:ro

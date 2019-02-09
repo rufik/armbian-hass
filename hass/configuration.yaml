@@ -21,6 +21,8 @@ updater:
 # Discover some devices automatically
 discovery:
 
+system_health:
+
 mqtt:
   broker: localhost
   port: 1883
