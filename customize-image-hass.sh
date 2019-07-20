@@ -96,7 +96,7 @@ done
 
 print_info "Installing Docker CE ..."
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-add-apt-repository "deb [arch=armhf] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+add-apt-repository "deb [arch=arm64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 apt-get -q update
 sleep 3
 apt-get -q -y install docker-ce docker-compose
@@ -120,17 +120,17 @@ mkdir -p $BASE_DIR/mariadb/config
 #chmod ug+rwx $BASE_DIR/mqtt/logs/
 
 print_info "Downloading MQTT config files..."
-wget -q -O /$BASE_DIR/mqtt/conf/options.json https://raw.githubusercontent.com/rufik/armbian-hass/master/mqtt/options.json
-wget -q -O $BASE_DIR/mqtt/conf/mosquitto.conf https://raw.githubusercontent.com/rufik/armbian-hass/master/mqtt/mosquitto.conf
+wget -q -O /$BASE_DIR/mqtt/conf/options.json https://raw.githubusercontent.com/rufik/armbian-hass/aarch64/mqtt/options.json
+wget -q -O $BASE_DIR/mqtt/conf/mosquitto.conf https://raw.githubusercontent.com/rufik/armbian-hass/aarch64/mqtt/mosquitto.conf
 #prevent mosquitto from overwriting config file
 chmod ugo-w $BASE_DIR/mqtt/conf/mosquitto.conf
-#wget -O /opt/has/addons/configurator-settings.conf https://raw.githubusercontent.com/rufik/armbian-hass/master/addons/configurator-settings.conf
+#wget -O /opt/has/addons/configurator-settings.conf https://raw.githubusercontent.com/rufik/armbian-hass/aarch64/addons/configurator-settings.conf
 print_info "" "Done." "info"
 
 print_info "Downloading HASS, MariaDB and InfluxDB config files..."
-wget -q -O $BASE_DIR/influxdb/influxdb.conf https://raw.githubusercontent.com/rufik/armbian-hass/master/influxdb/influxdb.conf
-wget -q -O $BASE_DIR/config/configuration.yaml https://raw.githubusercontent.com/rufik/armbian-hass/master/hass/configuration.yaml
-wget -q -O $BASE_DIR/mariadb/config/my.cnf https://raw.githubusercontent.com/rufik/armbian-hass/master/mariadb/my.cnf
+wget -q -O $BASE_DIR/influxdb/influxdb.conf https://raw.githubusercontent.com/rufik/armbian-hass/aarch64/influxdb/influxdb.conf
+wget -q -O $BASE_DIR/config/configuration.yaml https://raw.githubusercontent.com/rufik/armbian-hass/aarch64/hass/configuration.yaml
+wget -q -O $BASE_DIR/mariadb/config/my.cnf https://raw.githubusercontent.com/rufik/armbian-hass/aarch64/mariadb/my.cnf
 touch $BASE_DIR/config/groups.yaml
 touch $BASE_DIR/config/automations.yaml
 touch $BASE_DIR/config/scripts.yaml
@@ -140,8 +140,8 @@ print_info "" "Done." "info"
 
 
 print_info "Downloading docker-compose files into $DOCKER_COMPOSE_DIR dir..."
-wget -q -O $DOCKER_COMPOSE_DIR/docker-compose-portainer.yml https://raw.githubusercontent.com/rufik/armbian-hass/master/docker-compose-portainer.yml
-wget -q -O $DOCKER_COMPOSE_DIR/docker-compose-hass.yml https://raw.githubusercontent.com/rufik/armbian-hass/master/docker-compose-hass.yml
+wget -q -O $DOCKER_COMPOSE_DIR/docker-compose-portainer.yml https://raw.githubusercontent.com/rufik/armbian-hass/aarch64/docker-compose-portainer.yml
+wget -q -O $DOCKER_COMPOSE_DIR/docker-compose-hass.yml https://raw.githubusercontent.com/rufik/armbian-hass/aarch64/docker-compose-hass.yml
 print_info "" "Done." "info"
 
 HAS_UID=`id -u has`

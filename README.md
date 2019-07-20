@@ -5,7 +5,7 @@ Tested on OrangePI 3.
 # Installation
 - Execute commands:
    ```shell
-   wget -O /tmp/customize-image-hass.sh https://raw.githubusercontent.com/rufik/armbian-hass/master/customize-image-hass.sh
+   wget -O /tmp/customize-image-hass.sh https://raw.githubusercontent.com/rufik/armbian-hass/aarch64/customize-image-hass.sh
    chmod ug+x /tmp/customize-image-hass.sh
    sudo /tmp/customize-image-hass.sh
    ```
