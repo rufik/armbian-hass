@@ -1,6 +1,6 @@
 # armbian-hass
-This is customization script for Home Assistant installation on Armbian distro.
-Tested on OrangePI 2 and OrangePI PC.
+This is customization script for Home Assistant installation on Armbian distro for arm64 / aarch64.
+Tested on OrangePI 3.
 
 # Installation
 - Execute commands:
