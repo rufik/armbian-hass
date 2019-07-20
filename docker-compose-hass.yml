@@ -3,7 +3,7 @@ version: '3'
 services:
   home-assistant:
     container_name: home-assistant
-    image: homeassistant/aarch64-homeassistant:0.95.4
+    image: homeassistant/armhf-homeassistant:0.87.0
     volumes:
       - /opt/has/config:/config
       - /etc/localtime:/etc/localtime:ro
@@ -17,7 +17,7 @@ services:
       - influxdb
   mariadb:
     container_name: mariadb
-    image: mariadb:10.4
+    image: yobasystems/alpine-mariadb:armhf
     volumes:
       - /opt/has/mariadb/data:/var/lib/mysql
       - /opt/has/mariadb/config:/etc/mysql
@@ -29,7 +29,7 @@ services:
     user: has
   influxdb:
     container_name: influxdb
-    image: influxdb:1.7-alpine
+    image: influxdb
     ports:
       - "8086:8086"
     volumes:
@@ -41,7 +41,7 @@ services:
     user: has
   grafana:
     container_name: grafana
-    image:  grafana/grafana-arm64v8-linux:6.2.5
+    image:  proxx/grafana-armv7
     ports:
       - "3000:3000"
     volumes:
