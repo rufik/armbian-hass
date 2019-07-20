@@ -44,31 +44,32 @@ print_info "******** -< Starting HASS customization >- ********" "" "ext"
 #user creation is armbian's first run feature
 
 #fix improper min cpu freq for H3
-print_info "Patching cpufrequtils min speed for H3..."
-sed -i 's/408000/480000/g' /etc/default/cpufrequtils
-service cpufrequtils restart
+# print_info "Patching cpufrequtils min speed for H3..."
+# sed -i 's/408000/480000/g' /etc/default/cpufrequtils
+# service cpufrequtils restart
 print_info "Disabling unattended-upgrades service..."
 systemctl stop unattended-upgrades
 systemctl disable unattended-upgrades
 
-print_info "Updating OS..."
-apt-get -q update && apt-get -y upgrade
+# print_info "Updating OS..."
+# apt-get -q update && apt-get -y upgrade
 
 #make sure that OS upgrade does not recover faulty min cpu freq
-print_info "Patching cpufrequtils min speed for H3 (after OS upgrade)..."
-sed -i 's/408000/480000/g' /etc/default/cpufrequtils
-service cpufrequtils restart
-print_info "Disabling unattended-upgrades service (after OS upgrade)..."
-systemctl stop unattended-upgrades
-systemctl disable unattended-upgrades
+# print_info "Patching cpufrequtils min speed for H3 (after OS upgrade)..."
+# sed -i 's/408000/480000/g' /etc/default/cpufrequtils
+# service cpufrequtils restart
+# print_info "Disabling unattended-upgrades service (after OS upgrade)..."
+# systemctl stop unattended-upgrades
+# systemctl disable unattended-upgrades
 
 print_info "Installing required packages and armbianmonitor..."
 apt-get -q -y install mc ccze jq avahi-daemon screen telnet p7zip
 armbianmonitor -r
 
-print_info "Setting red LED as hearbeat on system start ..."
+print_info "Setting gree LED as hearbeat on system start & disabling red LED..."
 sed -i 's/exit 0//g' /etc/rc.local
-echo 'RESULT=`echo "heartbeat" > /sys/class/leds/orangepi\:red\:status/trigger`' >> /etc/rc.local
+echo 'RESULT=`echo "0" > /sys/class/leds/orangepi\:red\:power/brightness`' >> /etc/rc.local
+echo 'RESULT=`echo "heartbeat" > /sys/class/leds/orangepi\:green\:status/trigger`' >> /etc/rc.local
 echo 'exit 0' >> /etc/rc.local
 
 while getopts ":h:d:" opt; do
